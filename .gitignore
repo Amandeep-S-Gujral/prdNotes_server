@@ -1,0 +1,5 @@
+node_modules/
+
+serviceAccountKey.js
+db.js
+.env

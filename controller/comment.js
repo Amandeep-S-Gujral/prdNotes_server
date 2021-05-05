@@ -1,6 +1,5 @@
 const Comment = require('../model/Comment')
 
-
 //add comment into the database
 let addComment = async(req, res) => {
     const body = req.body

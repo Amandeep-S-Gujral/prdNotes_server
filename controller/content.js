@@ -2,6 +2,7 @@ const Content = require('../model/Content')
 
 //get index list of content by passing type e.g. article, book, etc.
 let contentList = async (req, res) => {
+    
     if (isNaN(req.params.typ)) {
         const data = new Content
         await data.getContentList(req.params.typ)
