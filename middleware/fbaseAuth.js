@@ -2,7 +2,7 @@ const { setup, auth } = require('../db')
 
 const fbaseAuth = async (req, res, next) => {
     try {
-        const user = await auth.verifyIdToken(req.cookies['authToken'])
+        const user = await auth.verifyIdToken(req.headers.authorization)
         if (user === null) {
             throw new Error('unauthorized request')
         }
