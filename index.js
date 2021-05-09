@@ -10,10 +10,11 @@ const subscriberRouter = require('./routes/subscriber')
 const contactFormRouter = require('./routes/contactForm')
 const content = require('./routes/content')
 const comment = require('./routes/comment')
+const adminDoc = require('./routes/adminDoc')
 const cors = require('cors')
 
 const corsOptions = {
-    origin: 'https://www.prdnotes.com',
+    origin: 'http://localhost:3000',
     credentials: true
 }
 
@@ -24,6 +25,7 @@ app.use(subscriberRouter)
 app.use(contactFormRouter)
 app.use(content)
 app.use(comment)
+app.use(adminDoc)
 
 app.use(express.json())
 

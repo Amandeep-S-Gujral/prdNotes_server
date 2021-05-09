@@ -11,6 +11,7 @@ const isSubscriber = async(req, res, next) => {
          const snapshot = await query.get()
          const data = await snapshot.forEach(doc => result = {...doc.data() })
 
+         //if user exist, the req body is update to stored data
          if (result.subscribe) {
             req.body = { ...result }
         }
