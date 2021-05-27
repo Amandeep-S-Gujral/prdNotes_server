@@ -21,10 +21,9 @@ class ContactForm {
         })
     }
 
-    //get form data by start After time(default == now) and limit for pagination(default == 10)
-    //sorted in descending order
-    async getForm(startAfter, limit) {
-        const query = db.collection('contactForm').orderBy('timestamp', 'desc').startAfter(startAfter).limit(limit)
+    //get form data by date range
+    async getFormByDate(startDate, endDate, limit) {
+        const query = db.collection('contactForm').where('timestamp', '>', startDate).where('timestamp', '<', endDate).orderBy('timestamp', 'desc').limit(limit)
         const snapshot = await query.get()
         if (snapshot.empty) {
             throw new Error('no data available')
@@ -33,15 +32,15 @@ class ContactForm {
         return list
     }
 
-    //get form data by date range. sorted in descending order
-    async getFormByDate(startDate, endDate, limit) {
-        const query = db.collection('contactForm').orderBy('timestamp', 'desc').startAt(startDate).endAt(endDate).limit(limit)
+    //get form by src
+    async getFormBySrc(endDate, src, limit) {
+        const query = db.collection('contactForm').where('src', '==', `${src}`).where('timestamp', '<', endDate).orderBy('timestamp', 'desc').limit(3)
         const snapshot = await query.get()
         if (snapshot.empty) {
-            throw new Error('invalid date range')
+            throw new Error('invalid source!')
         }
-        const list = await snapshot.docs.map(doc => doc.data())
-        return list
+        const data = await snapshot.docs.map(doc => doc.data())
+        return data
     }
 
     //get form data by eid
@@ -65,6 +64,7 @@ class ContactForm {
         const data = await snapshot.docs.map(doc => doc.data())
         return data
     }
+
 }
 
 module.exports = ContactForm
