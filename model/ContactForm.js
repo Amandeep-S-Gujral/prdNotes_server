@@ -34,7 +34,7 @@ class ContactForm {
 
     //get form by src
     async getFormBySrc(endDate, src, limit) {
-        const query = db.collection('contactForm').where('src', '==', `${src}`).where('timestamp', '<', endDate).orderBy('timestamp', 'desc').limit(3)
+        const query = db.collection('contactForm').where('src', '==', `${src}`).where('timestamp', '<', endDate).orderBy('timestamp', 'desc').limit(limit)
         const snapshot = await query.get()
         if (snapshot.empty) {
             throw new Error('invalid source!')
