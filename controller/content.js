@@ -1,4 +1,5 @@
 const contLstServ = require('../service/contentLstService')
+const contBdyServ = require('../service/contentBdyService')
 
 //get index list of content by passing type e.g. article, book, etc.
 let getContentList = async (req, res) => {
@@ -18,9 +19,8 @@ let getContentList = async (req, res) => {
 //get the body of the content by passing cid
 let getContentBody = async (req, res) => {
     if (!isNaN(req.query.cid)) {
-        const cid = req.query.cid
-        const data = new Content({cid})
-        await data.getContentBdy()
+        const data = {cid: req.query.cid}
+        await contBdyServ.getContentBdyByCid(data)
             .then(data => res.status(200).send(data))
             .catch(e => res.status(400).send([{ err: e.message }]))
             return
@@ -29,16 +29,14 @@ let getContentBody = async (req, res) => {
 }
 
 let addContentToList = async(req, res) =>{
-    const bdy = req.body
-    console.log(bdy)
-    const data = new Content(bdy)
-    console.log(data)
-  
-    await data.addContentToList()
-        .then(data => res.send('ok'))
-        .catch(e => console.log(e))
+    const data = req.body
+    await contLstServ.addNewContent(data)
+        .then(data => res.status(200).send(data))
+        .catch(e => [{err:e.message}])
 
 }
+
+let addContentBdy
 
 module.exports = {
     getContentList,

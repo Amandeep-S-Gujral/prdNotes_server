@@ -21,17 +21,21 @@ class ContentLst {
         return this.data
     }
 
-     //set new content in content list
-     async addContent(){
-        const query1 = this.db.collection('content').orderBy('timestamp', 'desc').limit(1)
-        const snapshot = await query1.get()
+    //get content list length
+    async getContentLstLen(){
+        const query = this.db.collection('content').orderBy('timestamp', 'desc').limit(1)
+        const snapshot = await query.get()
         if(snapshot.empty){
-            throw new Error('no document available')
+            throw new Error('No document available!')
         }
-        this.data.cid = await snapshot.docs.map(doc => doc.cid)
+        const len = await snapshot.docs.map(doc => doc.data())[0].cid
+        return {len: parseInt(len)}
+    }
 
-        const query2 = db.collection('content')
-        await query2.add(this.data)
+     //set new content in content list
+     async addNewContent(){
+        const query = this.db.collection('content')
+        await query.add({...this.data})
         return this.data
     }
 }

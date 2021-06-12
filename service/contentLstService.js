@@ -15,14 +15,25 @@ const contLstServ = {
         return contLstRepoFac(dependency).getContentListByType()
     },
 
+    //get content list length
+    getContentLstLen() {
+        const dependency = {
+            db
+        }
+        return contLstRepoFac(dependency).getContentLstLen()
+    },
+
     //add to content list
-    addToContentlst (obj) {
+    async addNewContent(obj) {
         const data = contLstModlFac(obj)
+        await this.getContentLstLen()
+            .then(len => data.cid = len.len + 1)
+            .catch(e => e)
+
         const dependency = {
             db, data
         }
-
-
+        return contLstRepoFac(dependency).addNewContent()
     }
 }
 
