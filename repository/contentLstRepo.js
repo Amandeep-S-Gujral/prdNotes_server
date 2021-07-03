@@ -1,3 +1,4 @@
+//-content list repo factory
 const contLstRepoFac = (dependency) => {
     const contentLst = new ContentLst(dependency)
     return contentLst
@@ -10,12 +11,23 @@ class ContentLst {
         this.data = dependencies.data
     }
 
-    //method to get list of contents by type
+    //get list of contents by type
     async getContentListByType() {
         const query = this.db.collection('content').where('typ', '==', this.data.typ)
         const snapshot = await query.get()
         if (snapshot.empty) {
             throw new Error('invalid content type')
+        }
+        this.data = await snapshot.docs.map(doc => doc.data())
+        return this.data
+    }
+
+    //get content list by cid
+    async getContLstByCid(){
+        const query = this.db.collection('content').where('cid', '==', this.cid)
+        const snapshot = await query.get()
+        if(snapshot.empty){
+            throw new Error('Invalid cid!')
         }
         this.data = await snapshot.docs.map(doc => doc.data())
         return this.data
@@ -32,10 +44,28 @@ class ContentLst {
         return {len: parseInt(len)}
     }
 
-     //set new content in content list
+    //get content doc id by cid
+    async getContentDocId(){
+        const query = db.collection.where('cid', '==', this.data.cid)
+        const snapshot = await query.get()
+        if(snapshot.empty){
+            throw new Error('Invalid cid!')
+        }
+        const docId = await snapshot.docs.map(doc => doc.id).toString()
+        return docId
+    }
+
+     //add new entry in content collection
      async addNewContent(){
         const query = this.db.collection('content')
-        await query.add({...this.data})
+        const res = await query.add({...this.data})
+        return { data: this.data, docId: res.id}
+    }
+
+    //update existing entry in content collection 
+    async setContLst(){
+        const query = this.db.collection('content').where('cid', '==', this.cid)
+        await query.set({...this.data})
         return this.data
     }
 }

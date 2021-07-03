@@ -1,18 +1,18 @@
 const contBdyModlFac = (dependency) => {
-    const contentBdy = new Contentbdy(dependency)
+    const contentBdy = new ContBdyModl(dependency)
     return contentBdy
 }
 
-class Contentbdy{
+class ContBdyModl{
     constructor(dependency){
-        this.cid = dependency.cid,
-        this.bdy = dependency.bdy,
+        this.cid = dependency.cid
+        this.bdy = dependency.bdy
+        this.meta = dependency.meta
         this.timestamp = dependency.timestamp === undefined ? Date.now() : dependency.timestamp
-        this.like = dependency.like === undefined ? 0 : dependency.like
-        this.unlike = dependency.unlike === undefined ? 0 : dependency.unlike
-        this.share = dependency.share === undefined ? 0 : dependency.share
-        this.comment = dependency.comment === undefined ? 0 : dependency.comment
+        this.like = dependency.like
+        this.unlike = dependency.unlike
+        this.share = dependency.share
     }
 }
 
-module.exports = contBdyModlFac
+module.exports = {ContBdyModl, contBdyModlFac}

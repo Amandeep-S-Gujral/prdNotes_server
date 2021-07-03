@@ -7,6 +7,7 @@ class ContentBdy{
     constructor(dependency){
         this.db = dependency.db
         this.data = dependency.data
+        this.docId = dependency.docId
     }
 
     //get content body by cid
@@ -20,7 +21,12 @@ class ContentBdy{
         return this.data
     }
 
-    //add content body
+    //add or update content body
+    async addContentBdy() {
+        const query = this.db.collection('content').doc(this.docId).collection('detail').doc('body')
+        await query.set({...this.data})
+        return this.data
+    }
 }
 
 module.exports = contBdyRepoFac
