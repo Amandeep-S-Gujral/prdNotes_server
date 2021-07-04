@@ -1,7 +1,7 @@
 const { setup, db } = require('../db')
-const contLstModlFac = require('../model/contentLstModel')
-const contLstRepoFac = require('../repository/contentLstRepo')
-const contBdyServ = require('./contentBdyService')
+const { contLstModlFac } = require('../model/contLstModl')
+const contLstRepoFac = require('../repository/contLstRepo')
+const contBdyServ = require('./contBdyServ')
 
 const contLstServ = {
 
@@ -12,7 +12,7 @@ const contLstServ = {
             db,
             data
         }
-        return contLstRepoFac(dependency).getContentListByType()
+        return contLstRepoFac(dependency).getContLstByTyp()
     },
 
     //get content list by cid
@@ -30,7 +30,7 @@ const contLstServ = {
         const dependency = {
             db,
         }
-        return contLstRepoFac(dependency).getContentLstLen()
+        return contLstRepoFac(dependency).getContLstLen()
     },
 
     //get content doc id by cid
@@ -40,14 +40,15 @@ const contLstServ = {
             db,
             data
         }
-        return contLstRepoFac(dependency).getContentDocId()
+
+        return contLstRepoFac(dependency).getContDocId()
     },
 
     //add to content list
-    async addNewContent(obj) {
+    async addNewCont(obj) {
         let data = contLstModlFac(obj)
         await this.getContLstLen()
-            .then(len => data.cid = len.len + 1)
+            .then(obj => data.cid = obj.len + 1)
             .catch(e => e)
 
         const dependency = {
@@ -55,26 +56,32 @@ const contLstServ = {
         }
 
         //add content to the content collection
-        await contLstRepoFac(dependency).addNewContent()
+        await contLstRepoFac(dependency).addNewCont()
             .then(obj => data = obj)
             .catch(e => e)
 
         //add content bdy to the detail sub-collection
         await contBdyServ.addNewContBdy(data)
-            .then(obj => console.log(obj))
+            .then(obj => obj)
             .catch(e => e)
 
-        return data
+        return data.data
     },
 
     //update existing entry in content collection
-    setContLst(obj) {
+    async setContLst(obj) {
         const data = contLstModlFac(obj)
         const dependency = {
             db,
             data
         }
-        return contLstRepoFac.setContLst(dependency)
+
+        //get content docId by cid
+        await this.getContDocId(obj)
+            .then(obj => dependency.docId = obj.docId)
+            .catch(e => e)
+
+        return contLstRepoFac(dependency).setContLst()
     }
 }
 

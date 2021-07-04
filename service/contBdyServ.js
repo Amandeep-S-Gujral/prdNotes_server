@@ -1,18 +1,19 @@
 const { setup, db } = require('../db')
-const contBdyModlFac = require('../model/contentBdyModel')
-const contBdyRepoFac = require('../repository/contentBdyRepo')
-const contLstServ = require('./contentLstService')
+const {contBdyModlFac} = require('../model/contBdyModl')
+const contBdyRepoFac = require('../repository/contBdyRepo')
+const contLstServ = require('./contLstServ')
 
 const contBdyServ = {
 
     //get content body by cid
     getContBdyByCid(obj) {
         const data = contBdyModlFac(obj)
+        console.log(data)
         const dependency = {
             db,
             data
         }
-        return contBdyRepoFac(dependency).getContentBdyByCid()
+        return contBdyRepoFac(dependency).getContBdyByCid()
     },
 
     //add new content body in the detail collection
@@ -24,7 +25,7 @@ const contBdyServ = {
             docId: obj.docId
         }
 
-        return contBdyRepoFac(dependency).addContentBdy()
+        return contBdyRepoFac(dependency).addContBdy()
     },
 
     //update content body

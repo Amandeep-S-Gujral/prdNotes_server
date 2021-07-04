@@ -4,3 +4,4 @@ serviceAccountKey.json
 db.js
 .env
 firebase-debug.log
+firebase-debug.1.log

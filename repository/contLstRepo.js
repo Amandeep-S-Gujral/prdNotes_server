@@ -1,18 +1,19 @@
 //-content list repo factory
 const contLstRepoFac = (dependency) => {
-    const contentLst = new ContentLst(dependency)
+    const contentLst = new ContLstRepo(dependency)
     return contentLst
 }
 
 //-----content list repository class------
-class ContentLst {
-    constructor(dependencies) {
-        this.db = dependencies.db
-        this.data = dependencies.data
+class ContLstRepo {
+    constructor(dependency) {
+        this.db = dependency.db
+        this.data = dependency.data
+        this.docId = dependency.docId
     }
 
     //get list of contents by type
-    async getContentListByType() {
+    async getContLstByTyp() {
         const query = this.db.collection('content').where('typ', '==', this.data.typ)
         const snapshot = await query.get()
         if (snapshot.empty) {
@@ -23,10 +24,10 @@ class ContentLst {
     }
 
     //get content list by cid
-    async getContLstByCid(){
+    async getContLstByCid() {
         const query = this.db.collection('content').where('cid', '==', this.cid)
         const snapshot = await query.get()
-        if(snapshot.empty){
+        if (snapshot.empty) {
             throw new Error('Invalid cid!')
         }
         this.data = await snapshot.docs.map(doc => doc.data())
@@ -34,39 +35,39 @@ class ContentLst {
     }
 
     //get content list length
-    async getContentLstLen(){
+    async getContLstLen() {
         const query = this.db.collection('content').orderBy('timestamp', 'desc').limit(1)
         const snapshot = await query.get()
-        if(snapshot.empty){
+        if (snapshot.empty) {
             throw new Error('No document available!')
         }
         const len = await snapshot.docs.map(doc => doc.data())[0].cid
-        return {len: parseInt(len)}
+        return { len: parseInt(len) }
     }
 
     //get content doc id by cid
-    async getContentDocId(){
-        const query = db.collection.where('cid', '==', this.data.cid)
+    async getContDocId() {
+        const query = this.db.collection('content').where('cid', '==', this.data.cid)
         const snapshot = await query.get()
-        if(snapshot.empty){
+        if (snapshot.empty) {
             throw new Error('Invalid cid!')
         }
         const docId = await snapshot.docs.map(doc => doc.id).toString()
-        return docId
+        return {docId}
     }
 
-     //add new entry in content collection
-     async addNewContent(){
+    //add new entry in content collection
+    async addNewCont() {
         const query = this.db.collection('content')
-        const res = await query.add({...this.data})
-        return { data: this.data, docId: res.id}
+        const res = await query.add({ ...this.data })
+        return { data: this.data, docId: res.id }
     }
 
     //update existing entry in content collection 
-    async setContLst(){
-        const query = this.db.collection('content').where('cid', '==', this.cid)
-        await query.set({...this.data})
-        return this.data
+    async setContLst() {
+        const query = this.db.collection('content').doc(this.docId)
+        const res = await query.update(JSON.parse(JSON.stringify({...this.data})))
+        return res
     }
 }
 

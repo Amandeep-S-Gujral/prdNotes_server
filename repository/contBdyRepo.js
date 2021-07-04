@@ -1,9 +1,9 @@
 const contBdyRepoFac = (dependency) => {
-    const contentBdy = new ContentBdy(dependency)
+    const contentBdy = new ContBdyRepo(dependency)
     return contentBdy
 }
 
-class ContentBdy{
+class ContBdyRepo{
     constructor(dependency){
         this.db = dependency.db
         this.data = dependency.data
@@ -11,7 +11,7 @@ class ContentBdy{
     }
 
     //get content body by cid
-    async getContentBdyByCid() {
+    async getContBdyByCid() {
         const query = this.db.collectionGroup('detail').where('cid', '==', this.data.cid)
         const snapshot = await query.get()
         if(snapshot.empty){
@@ -22,7 +22,7 @@ class ContentBdy{
     }
 
     //add or update content body
-    async addContentBdy() {
+    async addContBdy() {
         const query = this.db.collection('content').doc(this.docId).collection('detail').doc('body')
         await query.set({...this.data})
         return this.data
