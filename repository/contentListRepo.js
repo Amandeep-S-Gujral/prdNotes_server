@@ -1,41 +1,40 @@
 //-content list repo factory
-const contLstRepoFac = (dependency) => {
-    const contentLst = new ContLstRepo(dependency)
+const contentListRepoFactory = (dependency) => {
+    const contentLst = new ContentListRepo(dependency)
     return contentLst
 }
 
 //-----content list repository class------
-class ContLstRepo {
+class ContentListRepo {
     constructor(dependency) {
         this.db = dependency.db
-        this.data = dependency.data
-        this.docId = dependency.docId
     }
 
     //get list of contents by type
-    async getContLstByTyp() {
-        const query = this.db.collection('content').where('typ', '==', this.data.typ)
+    async getContentListByType(data) {
+
+        const query = this.db.collection('content').where('typ', '==', data.typ)
         const snapshot = await query.get()
         if (snapshot.empty) {
             throw new Error('invalid content type')
         }
-        this.data = await snapshot.docs.map(doc => doc.data())
-        return this.data
+        const res = await snapshot.docs.map(doc => doc.data())
+        return res
     }
 
-    //get content list by cid
-    async getContLstByCid() {
-        const query = this.db.collection('content').where('cid', '==', this.cid)
+    //get content list entry by cid
+    async getEntryFromContentListByCid(data) {
+        const query = this.db.collection('content').where('cid', '==', data.cid)
         const snapshot = await query.get()
         if (snapshot.empty) {
             throw new Error('Invalid cid!')
         }
-        this.data = await snapshot.docs.map(doc => doc.data())
-        return this.data
+        const res = await snapshot.docs.map(doc => doc.data())
+        return res
     }
 
     //get content list length
-    async getContLstLen() {
+    async getContentListLength() {
         const query = this.db.collection('content').orderBy('timestamp', 'desc').limit(1)
         const snapshot = await query.get()
         if (snapshot.empty) {
@@ -46,29 +45,31 @@ class ContLstRepo {
     }
 
     //get content doc id by cid
-    async getContDocId() {
-        const query = this.db.collection('content').where('cid', '==', this.data.cid)
+    async getDocIdByCid(data) {
+        const query = this.db.collection('content').where('cid', '==', data.cid)
         const snapshot = await query.get()
         if (snapshot.empty) {
             throw new Error('Invalid cid!')
         }
         const docId = await snapshot.docs.map(doc => doc.id).toString()
-        return {docId}
+        return { docId }
     }
 
     //add new entry in content collection
-    async addNewCont() {
+    async addNewEntryInContentList(data) {
         const query = this.db.collection('content')
-        const res = await query.add({ ...this.data })
-        return { data: this.data, docId: res.id }
+        const res = await query.add({ ...data })
+        return { data: data, docId: res.id }
     }
 
     //update existing entry in content collection 
-    async setContLst() {
-        const query = this.db.collection('content').doc(this.docId)
-        const res = await query.update(JSON.parse(JSON.stringify({...this.data})))
-        return res
+    async setEntryInContentList(data, docId) {
+        const query = this.db.collection('content').doc(docId)
+        return await query.update({ ...data })
     }
 }
 
-module.exports = contLstRepoFac
+module.exports = {
+    ContentListRepo,
+    contentListRepoFactory
+}

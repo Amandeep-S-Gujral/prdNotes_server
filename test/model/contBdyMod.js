@@ -2,6 +2,7 @@ const {describe, it} = require('mocha')
 const chai = require('chai')
 const faker = require('faker')
 const assert = chai.assert
+const sinon = require('sinon')
 
 const { ContBdyModl, contBdyModlFac } = require('../../model/contBdyModl')
 
