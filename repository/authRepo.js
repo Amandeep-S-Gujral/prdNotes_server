@@ -1,6 +1,6 @@
 //-----auth repo factory-----
 const authRepoFactory = (dependency) => {
-    const repo = new authRepoFactory(dependency)
+    const repo = new AuthRepo(dependency)
     return repo
 }
 
@@ -14,19 +14,20 @@ class AuthRepo {
         return this.auth.getUser(data.uid)
     }
 
-    async getUserByEmail(data) {
-        return this.auth.getUserByEmail(data.email)
-    }
-
-    async verifyUser(idToken){
-        return this.auth.verifyIdToken(idToken)
-    }
-
-    async createUser(data) {
+    async addUser(data){
         return this.auth.createUser(data)
     }
 
     async updateUser(data, uid) {
         return this.auth.updateUser(uid, data)
     }
+
+    async setCustomClaim(data, claimObj) {
+        return this.auth.setCustomUserClaims(data.uid, claimObj)
+    }
+}
+
+module.exports = {
+    AuthRepo,
+    authRepoFactory
 }

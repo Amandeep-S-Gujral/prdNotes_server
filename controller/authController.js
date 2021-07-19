@@ -3,37 +3,47 @@ const authControllerFactory = (dependency) => {
     return controller
 }
 
-class AuthController{
-    constructor(dependency){
+class AuthController {
+    constructor(dependency) {
         this.dependency = dependency
     }
 
-    async signIn(req, res) {
-        const data = this.dependency.userModel(req.body)
-        await this.dependency.authService().signIn(data)
-            .then(obj => res.status(200).send(obj))
-            .catch(e => res.status(400).send([{err: e.message}]))
-    }
-
-    async signUp(req, res){
-        const data = this.dependency.userModel(req.body)
-        await this.dependency.authService().signUp(data)
-            .then(obj => res.status(200).send(obj))
-            .catch(e => res.status(400).send([{err: e.message}]))
-    }
-
-    async getProfile(req, res){
+    async getProfile(req, res) {
         const data = this.dependency.userModel(req.body)
         await this.dependency.authService().getProfile(data)
             .then(obj => res.status(200).send(obj))
-            .catch(e => res.status(400).send([{err: e.message}]))
+            .catch(e => res.status(400).send([{ err: e.message }]))
+        return
     }
 
-    async setProfile(req, res){
+    async addUser(req, res) {
         const data = this.dependency.userModel(req.body)
-        await this.dependency.authService().getProfile(data)
+        const claimObj = {}
+        claimObj[req.query.claim] = req.query.claimStatus
+        await this.dependency.authService().addUser(data, claimObj)
             .then(obj => res.status(200).send(obj))
-            .catch(e => res.status(200).send([{err: e.message}]))
+            .catch(e => [{ err: e.mesage }])
+        return
+    }
+
+    async setProfile(req, res) {
+        const data = this.dependency.userModel(req.body)
+        if (data.password === undefined) {
+            await this.dependency.authService().getProfile(data)
+                .then(obj => res.status(200).send(obj))
+                .catch(e => res.status(200).send([{ err: e.message }]))
+        }
+        return
+    }
+
+    async setCustomClaim(req, res) {
+        const data = this.dependency.userModel(req.body)
+        const claimObj = {}
+        claimObj[req.query.claim] = req.query.claimStatus
+        await this.dependency.authService().setCustomClaim(data, claimObj)
+            .then(obj => res.status(200).send(obj))
+            .catch(e => res.status(400).send([{ err: e.message }]))
+        return
     }
 }
 
