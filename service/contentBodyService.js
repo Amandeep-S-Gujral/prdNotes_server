@@ -45,7 +45,7 @@ class ContentBodyService {
             .then(obj => obj)
             .catch(e => { throw new Error(e.message) })
 
-        return { msg: 'updated' }
+        return [{ msg: 'updated' }]
     }
 
     //update social attributes e.g. like, share, etc
@@ -53,10 +53,10 @@ class ContentBodyService {
         data[attributeName] = this.admin.firestore.FieldValue.increment(1)
 
         this.setContentBodyAttribute(data)
-            .then(obj => obj)
+            .then(obj => obj )
             .catch(e => { throw new Error(e.message) })
 
-        return this.getContentBodyByCid(data)
+        return [{msg: 'updated'}]
 
     }
 }

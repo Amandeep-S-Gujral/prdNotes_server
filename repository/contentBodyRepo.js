@@ -28,8 +28,6 @@ class ContentBodyRepo{
 
     //update content body
     async setContentBody(data, docId){
-        console.log('repo')
-        console.log(data)
         const query = this.db.collection('content').doc(docId).collection('detail').doc('body')
         return await query.update({...data})
     }

@@ -16,7 +16,7 @@ class ContentListRepo {
         const query = this.db.collection('content').where('typ', '==', data.typ)
         const snapshot = await query.get()
         if (snapshot.empty) {
-            throw new Error('invalid content type')
+            throw new Error('content type doesnot exist')
         }
         const res = await snapshot.docs.map(doc => doc.data())
         return res

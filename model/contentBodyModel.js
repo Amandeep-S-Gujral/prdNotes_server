@@ -8,6 +8,8 @@ class ContentBodyModel {
         this.cid = dependency.cid
         this.bdy = dependency.bdy
         this.meta = dependency.meta
+        this.typ = dependency.typ
+        this.url = dependency.url
         this.timestamp = dependency.timestamp === undefined ? Date.now() : dependency.timestamp
         this.like = dependency.like
         this.unlike = dependency.unlike

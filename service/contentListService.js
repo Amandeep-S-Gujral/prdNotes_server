@@ -39,7 +39,8 @@ class ContentListService {
 
         //get length of content collection and set cid = len + 1
         await this.getContentListLength()
-            .then(obj => data.cid = obj.len + 1)
+            .then(obj => data.cid = String(obj.len + 1))
+            .then(() => data.url = 'https://www.prdnotes.com/'+data.typ+'/'+data.cid)
             .catch(e => { throw new Error(e) })
 
         //add content to the content collection

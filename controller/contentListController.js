@@ -17,26 +17,26 @@ class ContentListController {
         const data = this.dependency.contentListModel({ typ: req.query.typ })
         await this.dependency.contentListService().getContentListByType(data)
             .then(data => res.status(200).send(data))
-            .catch(e => res.status(400).send([{ err: e.message }]))
+            .catch(e => res.status(400).send({ err: e.message }))
         return
 
     }
 
-    //add new content in content collection and in detail subcollection
+    //add new content in content collection and content body in detail subcollection
     async addNewContent(req, res) {
         const data = this.dependency.contentListModel(req.body)
         await this.dependency.contentListService().addEntryInContentList(data)
             .then(data => res.status(200).send(data))
-            .catch(e => [{ err: e.message }])
+            .catch(e => res.status(400).send({ err: e.message }))
         return
     }
 
-    // set content list entry and content body
+    // set content list entry
     async setContent(req, res) {
         const data = this.dependency.contentListModel(req.body)
         await this.dependency.contentListService().setEntryInContentList(data)
             .then(data => res.status(200).send(data))
-            .catch(e => [{ err: e.message }])
+            .catch(e => res.status(400).send({ err: e.message }))
         return
     }
 }
