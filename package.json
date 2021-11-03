@@ -23,7 +23,7 @@
     "firebase-functions": "^3.13.2",
     "firebase-tools": "^9.9.0",
     "jsonwebtoken": "^8.5.1",
-    "validator": "^13.5.2"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "faker": "^5.5.3",
