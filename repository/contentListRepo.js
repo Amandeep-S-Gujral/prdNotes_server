@@ -1,3 +1,5 @@
+const { time } = require("faker")
+
 //-content list repo factory
 const contentListRepoFactory = (dependency) => {
     const contentLst = new ContentListRepo(dependency)
@@ -13,10 +15,10 @@ class ContentListRepo {
     //get list of contents by type
     async getContentListByType(data) {
 
-        const query = this.db.collection('content').where('typ', '==', data.typ)
+        const query = this.db.collection('content').where('type', '==', data.type).orderBy('timestamp', 'desc')
         const snapshot = await query.get()
         if (snapshot.empty) {
-            throw new Error('content type doesnot exist')
+            throw new Error('content type does not exist')
         }
         const res = await snapshot.docs.map(doc => doc.data())
         return res

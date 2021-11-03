@@ -7,13 +7,13 @@ const contentListModelFactory = (dependency) => {
 class ContentListModel {
     constructor(dependency){
         this.cid = dependency.cid;
-        this.tle = dependency.tle;
-        this.subTle = dependency.subTle;
-        this.img = dependency.img;
+        this.title = dependency.title;
+        this.subTitle = dependency.subTitle;
+        this.image = dependency.image;
         this.url = dependency.url;
-        this.cat = dependency.cat;
-        this.des = dependency.des;
-        this.typ = dependency.typ;
+        this.category = dependency.category;
+        this.description = dependency.description;
+        this.type = dependency.type;
         this.post = dependency.post !== true ? false : true;
         this.like = dependency.like
         this.dislike = dependency.dislike
