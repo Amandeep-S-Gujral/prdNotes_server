@@ -1,10 +1,7 @@
 const functions = require('firebase-functions');
-const admin = require('firebase-admin')
-
 const express = require('express')
 const cookieParser = require('cookie-parser')
 const app = express()
-
 
 const subscriberRouter = require('./routes/subscriber')
 const contactFormRouter = require('./routes/contactForm')
@@ -16,7 +13,7 @@ const adminDoc = require('./routes/adminDoc')
 const cors = require('cors')
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3001', 'http://localhost:3000'],
     credentials: true
 }
 
@@ -33,5 +30,5 @@ app.use(adminDoc)
 
 app.use(express.json())
 
-//exports the api to th firebase functions
+//exports the api to the firebase functions
 exports.app = functions.https.onRequest(app)

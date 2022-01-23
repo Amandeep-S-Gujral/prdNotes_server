@@ -15,6 +15,8 @@ class ContentBodyModel {
         this.unlike = dependency.unlike
         this.share = dependency.share
         this.post = dependency.post !== true ? false : true
+        this.store = dependency.store
+        this.detail = dependency.detail
     }
 }
 
