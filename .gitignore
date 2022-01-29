@@ -2,7 +2,7 @@ node_modules/
 
 serviceAccountKey.json
 db.js
-.env
 firebase-debug.log
 firebase-debug.1.log
 ui-debug.log
+.env

@@ -1,23 +1,23 @@
-const jwt = require("jsonwebtoken")
-require('dotenv').config()
+// const jwt = require("jsonwebtoken")
+// require('dotenv').config()
 
-const user = process.env.USER
-const sign = process.env.SIGN
+// const user = process.env.USER
+// const sign = process.env.SIGN
 
-const auth = async (req, res, next) => {
-    try {
-        //decode encription
-        const decode = await jwt.verify(req.headers.authorization, sign)
+// const auth = async (req, res, next) => {
+//     try {
+//         //decode encription
+//         const decode = await jwt.verify(req.headers.authorization, sign)
 
-        if (decode.user !== user) {
-            throw new Error('unauthorized request')
-        }
+//         if (decode.user !== user) {
+//             throw new Error('unauthorized request')
+//         }
 
-        next()
+//         next()
 
-    } catch (e) {
-        res.status(401).send({err: e.message})
-    }
-}
+//     } catch (e) {
+//         res.status(401).send({err: e.message})
+//     }
+// }
 
-module.exports = auth
+// module.exports = auth
