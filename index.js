@@ -1,7 +1,9 @@
 const functions = require('firebase-functions');
 const express = require('express')
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 const app = express()
+
 
 const subscriberRouter = require('./routes/subscriber')
 const contactFormRouter = require('./routes/contactForm')
@@ -11,14 +13,22 @@ const authRouter = require('./routes/authRouter')
 const comment = require('./routes/comment')
 const adminDoc = require('./routes/adminDoc')
 
-const cors = require('cors')
+const allowedOrigins = ['https://www.prdnotes.com', 'http://192.168.7.39:3000', 'https://admin.prdnotes.com']
 
-const corsOptions = {
-    origin:'https://www.prdnotes.com',
-    credentials: true
-}
 
-app.use(cors(corsOptions))
+app.use(cors({
+  origin: function(origin, callback){
+    // do not allow requests with no origin 
+    // (like mobile apps or curl requests)
+    if(!origin) return callback(null, false);
+    if(allowedOrigins.indexOf(origin) === -1){
+      var msg = `The CORS policy for this site does not allow access from the specified Origin [ ${origin} ].`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+}));
+
 app.use(cookieParser())
 
 app.use(subscriberRouter)
