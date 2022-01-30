@@ -13,7 +13,7 @@ const authRouter = require('./routes/authRouter')
 const comment = require('./routes/comment')
 const adminDoc = require('./routes/adminDoc')
 
-const allowedOrigins = ['https://www.prdnotes.com', 'http://192.168.7.39:3000', 'https://admin.prdnotes.com']
+const allowedOrigins = ['https://www.prdnotes.com', 'https://admin.prdnotes.com']
 
 
 app.use(cors({
