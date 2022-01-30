@@ -9,7 +9,7 @@ class ContentListService {
     constructor(obj) {
         this.contentListRepo = obj.contentListRepo
         this.contentBodyService = obj.contentBodyService
-        this.contentBodyModel = obj.contentBodyModel
+        this.contentListModel = obj.contentListModel
     }
 
     //get content list by type
@@ -58,13 +58,14 @@ class ContentListService {
 
     //update existing entry in content collection
     async setEntryInContentList(data) {
+        let d = this.contentListModel(data)
         let docId = ''
         //get content docId by cid
-        await this.getDocIdByCid(data)
+        await this.getDocIdByCid(d)
             .then(obj => docId = obj.docId)
             .catch(e => { throw new Error(e.message) })
             
-        return this.contentListRepo().setEntryInContentList(data, docId)
+        return this.contentListRepo().setEntryInContentList(d, docId)
     }
 }
 

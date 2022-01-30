@@ -13,13 +13,11 @@ const authRouter = require('./routes/authRouter')
 const comment = require('./routes/comment')
 const adminDoc = require('./routes/adminDoc')
 
-const allowedOrigins = ['https://www.prdnotes.com', 'http://192.168.7.39:3000', 'https://admin.prdnotes.com']
-
+const allowedOrigins = ['https://www.prdnotes.com', 'https://admin.prdnotes.com']
 
 app.use(cors({
   origin: function(origin, callback){
     // do not allow requests with no origin 
-    // (like mobile apps or curl requests)
     if(!origin) return callback(null, false);
     if(allowedOrigins.indexOf(origin) === -1){
       var msg = `The CORS policy for this site does not allow access from the specified Origin [ ${origin} ].`;

@@ -15,7 +15,7 @@ dic.setFactory('contentBodyRepo', contentBodyRepoFactory)
 dic.setModel('contentBodyModel', contentBodyModelFactory)
 dic.setFactory('contentListService', contentListServiceFactory)
 dic.setFactory('contentListRepo', contentListRepoFactory)
-dic.setModel('contentListModelFactory', contentListModelFactory)
+dic.setModel('contentListModel', contentListModelFactory)
 dic.setModule('admin', admin)
 dic.setModule('db', db)
 
