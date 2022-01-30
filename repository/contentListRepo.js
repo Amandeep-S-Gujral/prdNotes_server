@@ -1,5 +1,3 @@
-const { time } = require("faker")
-
 //-content list repo factory
 const contentListRepoFactory = (dependency) => {
     const contentLst = new ContentListRepo(dependency)
