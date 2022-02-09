@@ -19,6 +19,7 @@ class ContentListModel {
         this.dislike = dependency.dislike
         this.share = dependency.share
         this.timestamp = dependency.timestamp === undefined ? Date.now() : dependency.timestamp
+        this.projectId = dependency.projectId
     }
 }
 

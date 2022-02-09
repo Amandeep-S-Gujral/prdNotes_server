@@ -17,6 +17,7 @@ class ContentBodyModel {
         this.post = dependency.post !== true ? false : true
         this.store = dependency.store
         this.detail = dependency.detail
+        this.projectId = dependency.projectId
     }
 }
 

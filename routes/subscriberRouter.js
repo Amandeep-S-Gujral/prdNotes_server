@@ -1,12 +1,10 @@
 const express = require('express')
 const router = new express.Router
-
 const validateEmail = require('../middleware/validateEmail')
 const isSubscriber = require('../middleware/isSubscriber')
-// const auth = require('../middleware/auth')
 
-const subscriber = require('../controller/subscriber')
+const {subscriberController} = require('../provider/subscriberProvider')
 
-router.post('/api/subscriber', [validateEmail, isSubscriber], (req, res) => subscriber(req, res))
+router.post('/api/subscriber', [validateEmail, isSubscriber], (req, res) => subscriberController.addNewSubscriber(req, res))
 
 module.exports = router

@@ -15,6 +15,7 @@ class UserModel {
         this.displayName = obj.displayName
         this.photoURL = obj.photoURL
         this.disable = obj.disable
+        this.projectId = dependency.projectId
     }
 }
 

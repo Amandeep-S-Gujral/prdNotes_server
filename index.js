@@ -5,7 +5,7 @@ const cors = require('cors')
 const app = express()
 
 
-const subscriberRouter = require('./routes/subscriber')
+const subscriberRouter = require('./routes/subscriberRouter')
 const contactFormRouter = require('./routes/contactForm')
 const contentListRouter = require('./routes/contentListRouter')
 const contentBodyRouter = require('./routes/contentBodyRouter')
@@ -13,7 +13,7 @@ const authRouter = require('./routes/authRouter')
 const comment = require('./routes/comment')
 const adminDoc = require('./routes/adminDoc')
 
-const allowedOrigins = ['https://www.prdnotes.com', 'https://admin.prdnotes.com']
+const allowedOrigins = ['https://www.prdnotes.com', 'http://localhost:3000']
 
 app.use(cors({
   origin: function(origin, callback){

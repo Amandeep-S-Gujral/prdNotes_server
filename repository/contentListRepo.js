@@ -1,4 +1,4 @@
-//-content list repo factory
+//----content list repo factory
 const contentListRepoFactory = (dependency) => {
     const contentLst = new ContentListRepo(dependency)
     return contentLst
