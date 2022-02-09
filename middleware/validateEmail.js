@@ -3,7 +3,6 @@
 const validator = require('validator')
 
 const validateEmail = async(req, res, next) => {
-    console.log(req.body)
     try {
         //check & validates email address
         const isValid = validator.isEmail(req.body.email)

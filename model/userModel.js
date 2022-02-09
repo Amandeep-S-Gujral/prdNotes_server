@@ -1,21 +1,22 @@
 //-----user model factory-----
-const userModelFactory = (dependency) => {
-    const model = new UserModel(dependency)
+const userModelFactory = (container) => {
+    const model = new UserModel(container)
     return JSON.parse(JSON.stringify(model))
 }
 
 //-----user model class-----
 class UserModel {
-    constructor(obj) {
-        this.uid = obj.uid
-        this.email = obj.email
-        this.emailVerified = obj.emailVerified
-        this.phoneNumber = obj.phoneNumber
-        this.password = obj.password
-        this.displayName = obj.displayName
-        this.photoURL = obj.photoURL
-        this.disable = obj.disable
-        this.projectId = dependency.projectId
+    constructor(container) {
+        this.uid = container.uid
+        this.email = container.email
+        this.emailVerified = container.emailVerified
+        this.phoneNumber = container.phoneNumber
+        this.password = container.password
+        this.displayName = container.displayName
+        this.photoURL = container.photoURL
+        this.disable = container.disable
+        this.projectId = container.projectId
+        this.timestamp = container.timestamp === undefined? Date.now() : container.timestamp
     }
 }
 

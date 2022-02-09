@@ -12,6 +12,7 @@ const contentBodyRouter = require('./routes/contentBodyRouter')
 const authRouter = require('./routes/authRouter')
 const comment = require('./routes/comment')
 const adminDoc = require('./routes/adminDoc')
+const projectRouter = require('./routes/projectRouter')
 
 const allowedOrigins = ['https://www.prdnotes.com', 'http://localhost:3000']
 
@@ -36,6 +37,7 @@ app.use(contentBodyRouter)
 app.use(authRouter)
 app.use(comment)
 app.use(adminDoc)
+app.use(projectRouter)
 
 app.use(express.json())
 
