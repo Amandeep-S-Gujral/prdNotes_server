@@ -12,8 +12,8 @@ class ContentListRepo {
 
     //get list of contents by type
     async getContentListByType(data) {
-        console.log(data)
-        const query = this.db.collection('content').where('type', '==', data.type).orderBy('timestamp', 'desc')
+        console.log(1, data)
+        const query = this.db.collection('content').where('projectId', '==', data.projectId).where('type', '==', data.type).orderBy('timestamp', 'desc')
         const snapshot = await query.get()
         if (snapshot.empty) {
             throw new Error('content type does not exist')

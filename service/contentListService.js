@@ -1,38 +1,31 @@
-//-----content lst service factory-----
-const contentListServiceFactory = (dependency) => {
-    const service = new ContentListService(dependency)
-    return service
-}
+const contentListServiceFactory = (container) => new ContentListService(container)
 
-//-----content list service class-----
+//-----
 class ContentListService {
-    constructor(obj) {
-        this.contentListRepo = obj.contentListRepo
-        this.contentBodyService = obj.contentBodyService
-        this.contentListModel = obj.contentListModel
+    constructor(container) {
+        this.contentListRepo = container.contentListRepo
+        this.contentBodyService = container.contentBodyService
+        this.contentListModel = container.contentListModel
     }
 
-    //get content list by type
     getContentListByType(data) {
         return this.contentListRepo().getContentListByType(data)
     }
 
-    //get content list by cid
     getEntryFromContentListByCid(data) {
-        return this.contentListRepo().getContentListEntryByCid(data)
+         const doc = this.contentListRepo().getContentListEntryByCid(data)
+         if(doc.projectId === data.projectId) return doc
+         return{err:'invalid request!'}
     }
 
-    //get content list length
     getContentListLength() {
         return this.contentListRepo().getContentListLength()
     }
 
-    //get content doc id by cid
     getDocIdByCid(data) {
         return this.contentListRepo().getDocIdByCid(data)
     }
 
-    //add to content list
     async addEntryInContentList(data) {
 
         let docId = ''
@@ -56,7 +49,6 @@ class ContentListService {
         return data
     }
 
-    //update existing entry in content collection
     async setEntryInContentList(data) {
         let d = this.contentListModel(data)
         let docId = ''

@@ -12,8 +12,12 @@ class ContentBodyService {
     }
 
     //get content body by cid
-    getContentBodyByCid(data) {
-        return this.contentBodyRepo().getContentBodyByCid(data)
+    async getContentBodyByCid(data) {
+        const doc = await this.contentBodyRepo().getContentBodyByCid(data)
+        if (doc.pop().projectId === data.projectId) {
+            return await this.contentBodyRepo().getContentBodyByCid(data)
+        }
+        throw new Error('invalid request!')
     }
 
     //add new content body in the detail collection
@@ -53,10 +57,10 @@ class ContentBodyService {
         data[attributeName] = this.admin.firestore.FieldValue.increment(1)
 
         this.setContentBodyAttribute(data)
-            .then(obj => obj )
+            .then(obj => obj)
             .catch(e => { throw new Error(e.message) })
 
-        return [{msg: 'updated'}]
+        return [{ msg: 'updated' }]
 
     }
 }
