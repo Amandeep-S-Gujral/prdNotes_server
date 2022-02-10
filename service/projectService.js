@@ -6,6 +6,9 @@ class ProjectService {
         this.projectRepo = container.projectRepo
     }
 
+    async getProjectListByAdmin(data){
+        return await this.projectRepo().getProjectListByAdmin(data.admin.toString())
+    }
     async addNewProject(data) {
         if (data.projectId === undefined) {
             const urlArr = data.projectURL.split(/\./gm)

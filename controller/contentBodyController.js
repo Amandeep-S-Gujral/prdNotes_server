@@ -11,7 +11,7 @@ class ContentBodyController {
     }
 
     async getContentBodyByCid(req, res) {
-        const data = this.dependency.contentBodyModel({ cid: req.query.cid })
+        const data = this.dependency.contentBodyModel({ cid: req.query.cid, projectId:req.body.projectId })
         await this.dependency.contentBodyService().getContentBodyByCid(data)
             .then(data => res.status(200).send(data))
             .catch(e => res.status(400).send({ err: e.message }))

@@ -1,3 +1,5 @@
+const e = require("express")
+
 const projectControllerFactory = (container) => new ProjectController(container)
 
 //-----
@@ -5,6 +7,13 @@ class ProjectController{
     constructor(container){
         this.projectModel = container.projectModel
         this.projectService = container.projectService
+    }
+
+    async getProjectListByAdmin(req, res){
+        const data = this.projectModel(req.body)
+        await this.projectService().getProjectListByAdmin(data)
+            .then(data => res.status(200).send(data))
+            .catch(e => res.status(400).send({err:e.message}))
     }
 
     async addNewProject(req, res){

@@ -12,7 +12,7 @@ class ContentListRepo {
 
     //get list of contents by type
     async getContentListByType(data) {
-
+        console.log(data)
         const query = this.db.collection('content').where('type', '==', data.type).orderBy('timestamp', 'desc')
         const snapshot = await query.get()
         if (snapshot.empty) {

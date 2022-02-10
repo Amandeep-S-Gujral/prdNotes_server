@@ -14,7 +14,7 @@ class ContentListController {
     async getContent(req, res) {
 
         //get index list of content by passing type e.g. article, book, etc.
-        const data = this.dependency.contentListModel({ type: req.query.type })
+        const data = this.dependency.contentListModel({ type: req.query.type, projectId: req.body.projectId })
         await this.dependency.contentListService().getContentListByType(data)
             .then(data => res.status(200).send(data))
             .catch(e => res.status(400).send({ err: e.message }))
